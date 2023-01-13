@@ -1,0 +1,37 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP .NET Core service.
+
+version: "3.4"
+
+services:
+  mealinformation-api:
+    image: meal-information:local
+    # pull_policy: always
+    container_name: meal-information
+    # build:
+    #   context: .
+    #   dockerfile: ./Dockerfile
+    ports:
+      - 8082:80
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      DB_HOST: mealinformation-db
+      DB_NAME: mealinformation
+      DB_USER: gibzapp
+      DB_PASS: password
+    volumes:
+      - ~/.vsdbg:/remote_debugger:rw
+    depends_on:
+      - mealinformation-db
+
+  mealinformation-db:
+    image: mariadb:10.7
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: mealinformation
+      MARIADB_USER: gibzapp
+      MARIADB_PASSWORD: password
+    volumes:
+      - ~/dockerVolumes/gibzapp/mealinformation/mariadb:/var/lib/mysql
+    ports:
+      - 13302:3306
