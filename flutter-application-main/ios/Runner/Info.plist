@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>GIBZ</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(FLUTTER_BUILD_NAME)</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>gibz.ch</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>gibz</string>
+			</array>
+		</dict>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>FlutterDeepLinkingEnabled</key>
+	<true/>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Bluetooth wird für die Lokalisierung des Smartphones während der GIBZ Rallye verwendet.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Bluetooth wird für die Lokalisierung des Smartphones während der GIBZ Rallye verwendet.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Für die Lokalisierung innerhalb des GIBZ empfängt die App Signale von Bluetooth Beacons.</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Für die Lokalisierung innerhalb des GIBZ empfängt die App Signale von Bluetooth-Sendern.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>Für die Lokalisierung innerhalb des GIBZ empfängt die App Signale von Bluetooth-Sendern.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Für die Lokalisierung innerhalb des GIBZ empfängt die App während der Rallye Signale von Bluetooth-Sendern.</string>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+</dict>
+</plist>

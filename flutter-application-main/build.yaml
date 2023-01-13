@@ -1,0 +1,9 @@
+targets:
+  $default:
+    builders:
+      dart_mappable_builder:
+        generate_for:
+          - lib/models/students_manual/students_manual.dart
+          - lib/models/meal_information/meal_information.dart
+          - lib/models/parking_information/parking_information.dart
+          - lib/models/rally/rally_models.dart
