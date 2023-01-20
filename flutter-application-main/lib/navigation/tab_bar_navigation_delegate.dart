@@ -13,6 +13,7 @@ import 'package:gibz_mobileapp/pages/parking_info.dart';
 import 'package:gibz_mobileapp/widgets/menu_day_page_view.dart';
 import 'package:gibz_mobileapp/widgets/menu_day_selector.dart';
 
+import '../pages/qr_code.dart';
 import 'page_configuration.dart';
 
 class MainNavigationDrawer extends StatefulWidget {
@@ -98,6 +99,23 @@ class _MainNavigationDrawerState extends State<MainNavigationDrawer>
                                               right: 0,
                                               child: MenuDaySelector(),
                                             ),
+                                            Positioned(
+                                                top: 0.0,
+                                                right: 0.0,
+                                                child: TextButton(
+                                                  style: TextButton.styleFrom(
+                                                      foregroundColor:
+                                                          Colors.white),
+                                                  child: const Text("QR-Code"),
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const CreateQR()),
+                                                    );
+                                                  },
+                                                )),
                                           ],
                                         ),
                                         pinned: true,
