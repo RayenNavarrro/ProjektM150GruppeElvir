@@ -6,6 +6,8 @@ import 'package:gibz_mobileapp/pages/skeleton_page.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:math';
 
 class QRCode extends StatelessWidget {
   const QRCode({
@@ -64,31 +66,92 @@ class QRCode extends StatelessWidget {
   }
 }
 
-class CreateQRButton extends StatelessWidget {
-  const CreateQRButton({Key? key}) : super(key: key);
+class CreateQR extends StatelessWidget {
+  const CreateQR({Key? key}) : super(key: key);
+
+  Future<String?> yourAsyncFunction() async {
+    // This is your function
+    const _chars =
+        'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+
+    Random _rnd = Random();
+
+    String getRandomString(int length) =>
+        String.fromCharCodes(Iterable.generate(
+            length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
+
+    // obtain shared preferences
+    final prefs = await SharedPreferences.getInstance();
+
+    // Try reading data from the counter key. If it doesn't exist, return 0.
+    final counter = prefs.getInt('counter') ?? 0;
+
+    if (counter != 0) {
+      //set Counter to value stored + 1
+      await prefs.setInt('counter', counter + 1);
+    } else {
+      //set Counter to 1
+      await prefs.setInt('counter', 1);
+
+      //set QRCodeString
+      await prefs.setString('qrcodestring', getRandomString(100));
+    }
+    // var string = '';
+
+    // Try reading data from the counter key. If it doesn't exist, return 0.
+    final stringValue = prefs.getString('qrcodestring') ?? '';
+
+    // if (stringValue != null) {
+    //   string = stringValue;
+    // } else {
+    //   string = '';
+    // }
+
+    // Try reading data from the counter key. If it doesn't exist, return 0.
+    final counterValue = prefs.getInt('counter') ?? 0;
+
+    return stringValue;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('QR Code'),
-      ),
-      body: Center(
-        child: SelectionArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const <Widget>[
-              // Add this QRCode widget in place of the Container
-              QRCode(
-                qrSize: 320,
-                qrData: 'https://flutterflow.io',
+    return FutureBuilder(
+      // Waiting your async function to finish
+      future: yourAsyncFunction(),
+      builder: (context, snapshot) {
+        // Async function finished
+        if (snapshot.connectionState == ConnectionState.done) {
+          final data = snapshot.data as String;
+          // To access the function data when is done
+          // you can take it from **snapshot.data**
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('QR Code'),
+            ),
+            body: Center(
+              child: SelectionArea(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    // Add this QRCode widget in place of the Container
+                    QRCode(
+                      qrSize: 320,
+                      qrData: '$data',
+                    ),
+                    Text('$data')
+                  ],
+                ),
               ),
-
-              Text('https://fluterflow.io'),
-            ],
-          ),
-        ),
-      ),
+            ),
+          );
+        } else {
+          // Show loading during the async function finish to process
+          return Scaffold(
+              appBar: AppBar(
+            title: const Text('QR Code'),
+          ));
+        }
+      },
     );
   }
 }

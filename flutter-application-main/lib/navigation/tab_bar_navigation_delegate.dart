@@ -112,7 +112,7 @@ class _MainNavigationDrawerState extends State<MainNavigationDrawer>
                                                       context,
                                                       MaterialPageRoute(
                                                           builder: (context) =>
-                                                              const CreateQRButton()),
+                                                              const CreateQR()),
                                                     );
                                                   },
                                                 )),
