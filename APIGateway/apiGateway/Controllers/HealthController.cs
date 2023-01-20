@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using MealInformation.Controllers;
 
-namespace MealInformation.Controllers;
+namespace ApiGateway.Controllers;
 
 [ApiController]
 [Route("[controller]")]
