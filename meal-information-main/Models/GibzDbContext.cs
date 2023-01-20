@@ -11,7 +11,8 @@ namespace MealInformation.Models
         public DbSet<Menu> Menus => Set<Menu>();
         public DbSet<Icon> Icons => Set<Icon>();
         public DbSet<NutritionalValue> NutritionalValues => Set<NutritionalValue>();
-        public DBSet<CoffeCardUser> CoffeCardUser => Set<CoffeCardUser>();
+
+        public DbSet<CoffeCardUser> CoffeCardUsers => Set<CoffeCardUser>();
 
         public GibzDbContext(DbContextOptions<GibzDbContext> options) : base(options) { }
 
