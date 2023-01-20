@@ -66,10 +66,21 @@ class QRCode extends StatelessWidget {
   }
 }
 
+class QRCodeValue {
+  String string;
+  int count;
+
+  QRCodeValue({
+    required this.string,
+    required this.count,
+  });
+}
+
 class CreateQR extends StatelessWidget {
   const CreateQR({Key? key}) : super(key: key);
 
-  Future<String?> yourAsyncFunction() async {
+  //check local stored string
+  Future<String> qrCodeString() async {
     // This is your function
     const _chars =
         'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
@@ -84,6 +95,25 @@ class CreateQR extends StatelessWidget {
     final prefs = await SharedPreferences.getInstance();
 
     // Try reading data from the counter key. If it doesn't exist, return 0.
+    final stringValue = prefs.getString('qrcodestring') ?? '';
+
+    if (stringValue == '') {
+      //set QRCodeString
+      await prefs.setString('qrcodestring', getRandomString(100));
+    }
+
+    // Try reading data from the counter key. If it doesn't exist, return 0.
+    final string = prefs.getString('qrcodestring') ?? '';
+
+    return string;
+  }
+
+  // get/set stored count should be done via api
+  Future<int> qrCodeCount() async {
+    // obtain shared preferences
+    final prefs = await SharedPreferences.getInstance();
+
+    // Try reading data from the counter key. If it doesn't exist, return 0.
     final counter = prefs.getInt('counter') ?? 0;
 
     if (counter != 0) {
@@ -92,36 +122,24 @@ class CreateQR extends StatelessWidget {
     } else {
       //set Counter to 1
       await prefs.setInt('counter', 1);
-
-      //set QRCodeString
-      await prefs.setString('qrcodestring', getRandomString(100));
     }
-    // var string = '';
-
-    // Try reading data from the counter key. If it doesn't exist, return 0.
-    final stringValue = prefs.getString('qrcodestring') ?? '';
-
-    // if (stringValue != null) {
-    //   string = stringValue;
-    // } else {
-    //   string = '';
-    // }
-
     // Try reading data from the counter key. If it doesn't exist, return 0.
     final counterValue = prefs.getInt('counter') ?? 0;
 
-    return stringValue;
+    return counterValue;
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       // Waiting your async function to finish
-      future: yourAsyncFunction(),
-      builder: (context, snapshot) {
+      future: Future.wait([qrCodeString(), qrCodeCount()]),
+      builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
         // Async function finished
         if (snapshot.connectionState == ConnectionState.done) {
-          final data = snapshot.data as String;
+          // get string and count without api
+          final string = snapshot.data![0];
+          final count = snapshot.data![1].toString();
           // To access the function data when is done
           // you can take it from **snapshot.data**
           return Scaffold(
@@ -133,12 +151,21 @@ class CreateQR extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
+                    Text(
+                      'Du hast bereits $count Stempel gesammelt',
+                      style: const TextStyle(fontSize: 40),
+                    ),
+
                     // Add this QRCode widget in place of the Container
                     QRCode(
                       qrSize: 320,
-                      qrData: '$data',
+                      qrData: '$string',
                     ),
-                    Text('$data')
+                    // String visuable if you cant scan QR Code
+                    Text(
+                      'String if not possible to scan QR Code: \n$string',
+                      style: const TextStyle(fontSize: 30),
+                    ),
                   ],
                 ),
               ),
